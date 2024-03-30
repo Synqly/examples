@@ -1,0 +1,13 @@
+{
+  "name": "@synqly/example-siem-connector",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node ./main.js"
+  },
+  "dependencies": {
+    "@synqly/client-sdk": "git@github.com:Synqly/typescript-client-sdk.git",
+    "dotenv": "^16.4.5"
+  }
+}
