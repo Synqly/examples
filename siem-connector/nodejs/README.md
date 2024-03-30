@@ -17,7 +17,7 @@ This example shows you how to:
 
 ## Prerequisites
 
-- A [Synqly](https://synqly.com) `Organization`
+- A [Synqly](https://synqly.com) Organization
 - Your Synqly Organization Token
 
 ### Optional
