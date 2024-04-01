@@ -38,7 +38,7 @@ This example shows you how to:
    ```
 5. Start the demo
    ```sh
-   npm start
+   npm run dev
    ```
 
 Exit the example by pressing `Ctrl+C`, or wait until it completes its run.
