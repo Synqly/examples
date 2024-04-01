@@ -24,16 +24,20 @@ This example shows you how to:
 > While Synqly is in private beta, the [Synqly Client SDK] and [Synqly Connect React SDK] can only be installed from a private GitHub repo. To install the SDKs, make sure you have set up SSH access to the private GitHub repos [Synqly/typescript-client-sdk] and [Synqly/connect-react-sdk]. Please contact us if you need access.
 
 1. Clone this repository and navigate the directory of this example:
-   ```bash
+   ```sh
    cd connect/nextjs-pages
    ```
 2. Rename [.env.template](./.env.template) to `.env.local` and set the variable `SYNQLY_ORG_TOKEN` to the value of your organization access token – you can find this in your [Synqly organization settings](https://app.synqly.com/settings/secrets)
 3. Install dependencies
-   ```bash
+   ```sh
    npm install
    ```
-4. Start the demo
-   ```bash
+4. Generate the sample data by running [scripts/generate-demo-data.mjs](scripts/generate-demo-data.mjs):
+   ```sh
+   scripts/generate-demo-data.mjs
+   ```
+5. Start the demo
+   ```sh
    npm start
    ```
 
