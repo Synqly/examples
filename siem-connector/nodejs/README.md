@@ -42,10 +42,10 @@ Setting up Splunk is optional, but also makes for a more compelling demo of the 
    npm install
    ```
 4. **(Optional)** Configure access to Splunk via the environment variables `SPLUNK_URL` and `SPLUNK_HEC_TOKEN` – either add them to `.env.local` or export them like so:
-    ```sh
-    export SPLUNK_URL=https://my-org.splunkcloud.com:8088/services/collector/event
-    export SPLUNK_HEC_TOKEN=my-splunk-token
-    ```
+   ```sh
+   export SPLUNK_URL=https://my-org.splunkcloud.com:8088/services/collector/event
+   export SPLUNK_HEC_TOKEN=my-splunk-token
+   ```
 5. **(Optional)** Set the duration the demo will run by setting the `DURATION_SECONDS` variable in the `.env.local` file
 6. Start the demo
    ```bash

@@ -9,5 +9,8 @@
   "dependencies": {
     "@synqly/client-sdk": "git@github.com:Synqly/typescript-client-sdk.git",
     "dotenv": "^16.4.5"
+  },
+  "synqly-examples": {
+    "target": "siem-connector/nodejs"
   }
 }
