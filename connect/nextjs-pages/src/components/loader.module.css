@@ -1,0 +1,39 @@
+.circular {
+  --size: 19px;
+  --thickness: 3px;
+  --color: var(--gray-10);
+  --speed: 1s;
+  display: flex;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+
+.circular div {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: var(--size);
+  height: var(--size);
+  border: var(--thickness) solid var(--color);
+  border-radius: 50%;
+}
+
+.circular div:nth-child(1) {
+  opacity: 0.3;
+}
+
+.circular div:nth-child(2) {
+  clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0%);
+  animation: spin var(--speed) infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

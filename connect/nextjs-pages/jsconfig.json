@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "checkJs": true,
+    "allowJs": true,
+    "strict": false,
+    "jsx": "preserve",
+    "target": "ES2022",
+    "module": "esnext",
+    "moduleResolution": "bundler"
+  }
+}
