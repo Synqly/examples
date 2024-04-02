@@ -38,7 +38,7 @@ Setting up Splunk is optional, but also makes for a more compelling demo of the 
 >
 > Please contact us if you need access or support.
 
-1. Clone this repository and navigate the directory of this example:
+1. Clone this repository and navigate to the directory of this example:
    ```bash
    cd siem-connector/nodejs
    ```
