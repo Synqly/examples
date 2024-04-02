@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "publish:example": "scripts/publish.sh --push",
     "start": "node ./main.js"
   },
   "dependencies": {
