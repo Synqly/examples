@@ -4,8 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepack": "clean-package",
-    "postpack": "clean-package restore",
     "start": "node ./main.js"
   },
   "dependencies": {
