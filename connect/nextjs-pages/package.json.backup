@@ -6,6 +6,8 @@
     "build": "next build",
     "dev": "next dev --port 4000",
     "lint": "next lint",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore",
     "start": "next start --port 4000"
   },
   "dependencies": {
@@ -19,9 +21,18 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "clean-package": "^2.2.0",
     "dotenv": "^16.4.5",
     "eslint": "^8",
     "eslint-config-next": "14.1.4"
+  },
+  "clean-package": {
+    "remove": [
+      "clean-package",
+      "devDependencies.clean-package",
+      "scripts.prepack",
+      "scripts.postpack"
+    ]
   },
   "synqly-examples": {
     "target": "connect/nextjs-pages"
