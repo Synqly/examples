@@ -47,6 +47,7 @@ This example shows you how to:
    ```sh
    npm run dev
    ```
+6. You can now access the demo at <http://localhost:4000>
 
 Exit the example by pressing `Ctrl+C`, or wait until it completes its run.
 
