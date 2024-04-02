@@ -12,6 +12,15 @@
     "@synqly/client-sdk": "*",
     "dotenv": "^16.4.5"
   },
+  "devDependencies": {
+    "clean-package": "^2.2.0"
+  },
+  "clean-package": {
+    "remove": [
+      "devDependencies",
+      "clean-package"
+    ]
+  },
   "synqly-examples": {
     "target": "siem-connector/nodejs"
   }
