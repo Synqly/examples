@@ -48,8 +48,8 @@ await ensureIntegrationPoints(org, [
     connector: 'notifications',
     // Only allow the slack provider for this integration point
     environments: {
-      test: ['slack'],
-      prod: ['slack'],
+      test: ['notifications_slack'],
+      prod: ['notifications_slack'],
     },
   },
 ])

@@ -21,7 +21,13 @@ This example shows you how to:
 ## Setup and run the example
 
 > [!IMPORTANT]
-> While Synqly is in private beta, the [Synqly Client SDK] and [Synqly Connect React SDK] can only be installed from a private GitHub repo. To install the SDKs, make sure you have set up SSH access to the private GitHub repos [Synqly/typescript-client-sdk] and [Synqly/connect-react-sdk]. Please contact us if you need access.
+> While Synqly is in private beta, the [Synqly Client SDK] and [Synqly Connect React SDK] can only be installed from a private npm packages. To install, make sure you've first logged in to npm:
+>
+> ```sh
+> npm login
+> ```
+>
+> Please contact us if you need access or support.
 
 1. Clone this repository and navigate the directory of this example:
    ```sh
