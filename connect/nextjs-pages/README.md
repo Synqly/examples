@@ -29,7 +29,7 @@ This example shows you how to:
 >
 > Please contact us if you need access or support.
 
-1. Clone this repository and navigate the directory of this example:
+1. Clone this repository and navigate to the directory of this example:
    ```sh
    cd connect/nextjs-pages
    ```
