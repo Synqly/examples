@@ -19,6 +19,7 @@ This example shows you how to:
 
 - A [Synqly](https://synqly.com) Organization
 - Your Synqly Organization Token
+- [Node.js](https://nodejs.org/en) v18 or later
 
 ### Optional
 
