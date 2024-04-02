@@ -13,6 +13,8 @@ Each example is self-contained and intended to be run in isolation. For instruct
 
 - [SIEM Connector](./siem-connector)
   - [NodeJS example](./siem-connector/nodejs)
+- [Connect UI](./connect)
+  - [NextJS pages router example](./connect/nextjs-pages)
 
 ## Contributing
 
