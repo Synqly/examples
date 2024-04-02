@@ -6,7 +6,6 @@
     "build": "next build",
     "dev": "next dev --port 4000",
     "lint": "next lint",
-    "publish:example": "scripts/publish.sh --push",
     "start": "next start --port 4000"
   },
   "dependencies": {
