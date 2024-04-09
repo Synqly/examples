@@ -33,10 +33,26 @@ await ensureAccounts(org, NUM_DEMO_ACCOUNTS)
 console.log('\nEnsuring demo integration points ...')
 await ensureIntegrationPoints(org, [
   {
+    // The name acts as a slug, or human friendly identifier. If not
+    // specified, it will have the same value as the automatically
+    // generated `id` field.
     name: NEXT_PUBLIC_AUDIT_LOG_EXPORT_ID,
+
+    // The `fullname` of an integration point is used within Connect UI to
+    // render the heading of the integration point.
     fullname: 'Audit Log Export',
+
+    // The `connector` defines which category of connector this integration
+    // point (and any integrations associated with it) will use.
     connector: 'siem',
-    // Allow any providers for this integration point
+
+    // The `environments` field lets you define allowed provider
+    // configurations in specific environments. At least one environment
+    // has to be specified. NOTE: if an environment is *not* specified then
+    // no providers will be allowed in that environment. The same holds
+    // true for an empty array. We recommend using `['*']` unless you have
+    // specific reasons to lock this down to a specific set of allowed
+    // provider types.
     environments: {
       test: ['*'],
       prod: ['*'],
@@ -46,7 +62,11 @@ await ensureIntegrationPoints(org, [
     name: NEXT_PUBLIC_SLACK_NOTIFICATIONS_ID,
     fullname: 'Slack Notifications',
     connector: 'notifications',
-    // Only allow the slack provider for this integration point
+    // For this provider we only allow the Slack provider. This means
+    // Connect UI will go directly to the provider configuration screen,
+    // since there's no point showing a list of providers when there's only
+    // one. This can be used to create integration points for specific
+    // providers.
     environments: {
       test: ['notifications_slack'],
       prod: ['notifications_slack'],

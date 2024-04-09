@@ -23,12 +23,15 @@ function IntegrationCard({
   provider = null,
   children: description,
 }) {
+  // The `useIntegrationPoint` hook is used to get data about an integration
+  // point. If `account` is specified, the returned `integrations` list
+  // will include the integration associated with that account only.
   const integrationPoint = useIntegrationPoint(integrationPointName, token, {
     account,
     provider,
     onClose: () => setSynqlyFrame(null),
-    onError: (...args) => console.log('onError', ...args),
-    onComplete: (...args) => console.log('onComplete', ...args),
+    onError: (error) => console.error('onError', error),
+    onComplete: (result) => console.log('onComplete', result),
   })
 
   const [integration] = integrationPoint.integrations
@@ -43,18 +46,27 @@ function IntegrationCard({
           <IntegrationStatus {...integrationPoint} />
 
           {!!integration ? (
+            // If we have integration data, this means an integration has
+            // been configured for this integration point so instead of
+            // connect we show a button to disconnect the integration.
             <DisconnectButton {...integrationPoint}>
               Disconnect
             </DisconnectButton>
           ) : (
-            <ConnectButton onClick={setSynqlyFrame} {...integrationPoint}>
+            // When we don't have an integration data, we show a connect
+            // button instead. This will call `integrationPoint.connect`
+            // with properties that state we plan to embed Connect UI. This
+            // returns an iframe, which we then use to set state which
+            // opens the frame in a modal dialog.
+            <ConnectButton {...integrationPoint} onOpen={setSynqlyFrame}>
               Connect
             </ConnectButton>
           )}
         </Flex>
       </Flex>
 
-      {/* Synqly Connect Frame embedded in your dialog style */}
+      {/* When `synqlyFrame` has been set by the `ConnectButton`, we show
+      the contents in a modal dialog. */}
       <Dialog.Root open={!!synqlyFrame}>
         <Dialog.Content style={{ width: '460px' }}>
           <Inset>{synqlyFrame}</Inset>
@@ -76,8 +88,12 @@ function IntegrationHeading({ title, children: description }) {
   )
 }
 
-function IntegrationStatus({ integrations, isLoading, isValidating }) {
-  const [integration] = integrations
+function IntegrationStatus(integrationPoint) {
+  const {
+    integrations: [integration],
+    isLoading,
+    isValidating,
+  } = integrationPoint
 
   return (
     <Flex gap="2">
@@ -91,15 +107,16 @@ function IntegrationStatus({ integrations, isLoading, isValidating }) {
   )
 }
 
-function ConnectButton({ onClick, children, connect }) {
+function ConnectButton({ children, ...integrationPoint }) {
+  const { connect, onOpen } = integrationPoint
   const openSynqly = useCallback(() => {
     const connectUI = connect({
       type: 'embedded',
       loader: <Loader />,
     })
 
-    onClick(connectUI)
-  }, [onClick, connect])
+    onOpen(connectUI)
+  }, [onOpen, connect])
 
   return <Button onClick={openSynqly}>{children}</Button>
 }
