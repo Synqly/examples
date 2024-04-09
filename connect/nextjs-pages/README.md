@@ -49,9 +49,13 @@ This example shows you how to:
    ```
 6. You can now access the demo at <http://localhost:4000>
 
-Exit the example by pressing `Ctrl+C`, or wait until it completes its run.
+Exit the example by pressing `Ctrl+C`.
 
-To clean up the sample data that was generated at startup, run [scripts/clean-demo-data.mjs]
+To clean up the sample data that was generated at startup, run [scripts/clean-demo-data.mjs](scripts/clean-demo-data.mjs):
+
+```sh
+scripts/clean-demo-data.mjs
+```
 
 [Synqly Client SDK]: https://github.com/Synqly/typescript-client-sdk
 [Synqly/typescript-client-sdk]: https://github.com/Synqly/typescript-client-sdk
