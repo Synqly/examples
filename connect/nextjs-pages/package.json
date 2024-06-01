@@ -1,6 +1,7 @@
 {
   "name": "@synqly/example-connect-nextjs-pages",
   "version": "0.0.0",
+  "license": "Apache-2.0",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -23,8 +24,5 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
     "slug": "^9.0.0"
-  },
-  "synqly-examples": {
-    "target": "connect/nextjs-pages"
   }
 }
