@@ -1,7 +1,6 @@
 {
   "name": "@synqly/example-siem-connector",
   "version": "0.0.0",
-  "license": "Apache-2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,5 +9,8 @@
   "dependencies": {
     "@synqly/client-sdk": "*",
     "dotenv": "^16.4.5"
+  },
+  "synqly-examples": {
+    "target": "siem-connector/nodejs"
   }
 }
