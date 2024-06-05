@@ -30,15 +30,6 @@ Setting up Splunk is optional, but also makes for a more compelling demo of the 
 
 ## Setup and run the example
 
-> [!IMPORTANT]
-> While Synqly is in private beta, the [Synqly Client SDK] and [Synqly Connect React SDK] can only be installed from a private npm packages. To install, make sure you've first logged in to npm:
->
-> ```sh
-> npm login
-> ```
->
-> Please contact us if you need access or support.
-
 1. Clone this repository and navigate to the directory of this example:
    ```bash
    cd siem-connector/nodejs
