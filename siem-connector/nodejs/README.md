@@ -34,7 +34,7 @@ Setting up Splunk is optional, but also makes for a more compelling demo of the 
    ```bash
    cd siem-connector/nodejs
    ```
-2. Rename [.env.template](./.env.template) to `.env.local` and set the variable `SYNQLY_ORG_TOKEN` to the value of your organization access token – you can find this in your [Synqly organization settings](https://app.synqly.com/settings/secrets)
+2. Rename [.env.template](./.env.template) to `.env.local` and set the variable `SYNQLY_ORG_TOKEN` to the value of your organization access token – you can find this in your [Synqly organization settings](https://app.synqly.com/prod/settings/secrets)
 3. Install dependencies
    ```bash
    npm install
