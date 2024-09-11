@@ -9,6 +9,8 @@ const {
   SYNQLY_ORG_TOKEN,
   // DURATION_SECONDS: (Optional) Limits the running time of this demo to the given number of seconds. Defaults to 30 seconds.
   DURATION_SECONDS = 30,
+  SYNQLY_MANAGEMENT_URL,
+  SYNQLY_ENGINE_URL,
 } = process.env
 
 if (!SYNQLY_ORG_TOKEN) {
@@ -17,6 +19,7 @@ if (!SYNQLY_ORG_TOKEN) {
 
 const client = new ManagementClient({
   token: SYNQLY_ORG_TOKEN,
+  environment: SYNQLY_MANAGEMENT_URL,
 })
 
 main().finally(cleanupDemo) // Start the demo
@@ -26,7 +29,7 @@ async function main() {
   await cleanupDemo()
   const controller = new AbortController()
   process.on('SIGINT', async () => {
-    console.log(" Interrupted, cleaning up ... ")
+    console.log(' Interrupted, cleaning up ... ')
     controller.abort('SIGINT')
   })
 
@@ -251,6 +254,7 @@ class Tenant {
 
     const { siem } = new EngineClient({
       token: connector.result.token.access.secret,
+      environment: SYNQLY_ENGINE_URL,
     })
 
     this.#eventLogging = siem
