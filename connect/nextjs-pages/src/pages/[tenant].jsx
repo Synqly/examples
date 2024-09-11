@@ -112,7 +112,7 @@ function Page({ token, account, integrationPoints }) {
             account={account}
             token={token}
           >
-            {integrationPoint.description || '-'}
+            {integrationPoint.description}
           </IntegrationCard>
         ))}
       </Main>

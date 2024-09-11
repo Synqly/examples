@@ -36,6 +36,13 @@ await ensureIntegrationPoints(managementClient, [
     // point (and any integrations associated with it) will use.
     connector: 'siem',
 
+    // We recommend setting a description for your integration points. We
+    // don't render this description anywhere in the Connect UI experience,
+    // but you may choose to do so in your application UI. In this demo
+    // application, it's rendered in the list of integration points.
+    description:
+      'Audit Logs are retained for 24 hours. Add an integration to store them longer.',
+
     // The `environments` field lets you define allowed provider
     // configurations in specific environments. At least one environment
     // has to be specified. NOTE: if an environment is *not* specified then
@@ -52,6 +59,9 @@ await ensureIntegrationPoints(managementClient, [
     name: env.SLACK_NOTIFICATIONS_ID,
     fullname: 'Slack Notifications',
     connector: 'notifications',
+    description:
+      'This integration point only supports Slack as the provider, and will not display a provider selection screen.',
+
     // For this provider we only allow the Slack provider. This means
     // Connect UI will go directly to the provider configuration screen,
     // since there's no point showing a list of providers when there's only

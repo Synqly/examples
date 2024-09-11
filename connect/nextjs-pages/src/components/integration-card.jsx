@@ -87,7 +87,7 @@ function IntegrationHeading({ title, children: description }) {
         <Heading>{title}</Heading>
         <Text>Powered by Synqly</Text>
       </Flex>
-      <Text>{description}</Text>
+      {description && <Text>{description}</Text>}
     </Flex>
   )
 }
