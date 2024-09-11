@@ -19,6 +19,14 @@ async function getServerSideProps(context) {
     environment: process.env.NEXT_PUBLIC_SYNQLY_API_ROOT,
   })
 
+  const { body: integrationPoints } = await client.integrationPoints.list()
+
+  if (!(integrationPoints?.result.length > 0)) {
+    return {
+      notFound: true,
+    }
+  }
+
   // Typically in a multi-tenant application you'd have some identifier for
   // the tenant in your system. In this demo, that identifier is `tenant`.
   //
@@ -61,6 +69,7 @@ async function getServerSideProps(context) {
   // https://docs.synqly.com/reference/api-authentication
   const { body: tokenPair } = await client.tokens.createToken({
     permissionSet: 'connect-ui',
+    tokenTtl: '24h',
     resources: {
       accounts: {
         ids: [account.result.id],
@@ -78,40 +87,34 @@ async function getServerSideProps(context) {
     props: {
       token: tokenPair.result.primary.access.secret,
       account: serialize(account.result),
+      integrationPoints: serialize(integrationPoints.result),
     },
   }
 }
 
-function Page({ token, account }) {
+function Page({ token, account, integrationPoints }) {
   return (
     <>
       <Header />
       <Main>
         <Heading>{account.fullname}</Heading>
-        {/* The IntegrationCard component is an example of how you could
-        abstract the integration point management into components that make
-        sense to your use case and code base. Here we use the same
-        component twice, just with different parameters. Please see
-        scripts/generate-demo-data.mjs for more detail of the integration
-        points created for this demo. */}
-        <IntegrationCard
-          integrationPointName={process.env.NEXT_PUBLIC_AUDIT_LOG_EXPORT_ID}
-          title="Audit Log Export"
-          account={account}
-          token={token}
-        >
-          Audit Logs are retained for 24 hours. Add an integration to store them
-          longer.
-        </IntegrationCard>
-        <IntegrationCard
-          integrationPointName={process.env.NEXT_PUBLIC_SLACK_NOTIFICATIONS_ID}
-          title="Slack Notifications"
-          account={account}
-          token={token}
-          provider="slack"
-        >
-          This integration point only supports Slack as the provider.
-        </IntegrationCard>
+        {integrationPoints.map((integrationPoint) => (
+          /* The IntegrationCard component is an example of how you could
+             abstract the integration point management into components that
+             make sense to your use case and code base. Here we use the
+             same component twice, just with different parameters. Please
+             see scripts/generate-demo-data.mjs for more detail of the
+             integration points created for this demo. */
+          <IntegrationCard
+            key={integrationPoint.id}
+            integrationPointName={integrationPoint.name}
+            title={integrationPoint.fullname}
+            account={account}
+            token={token}
+          >
+            {integrationPoint.description || '-'}
+          </IntegrationCard>
+        ))}
       </Main>
     </>
   )

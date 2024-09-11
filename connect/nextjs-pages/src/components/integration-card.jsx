@@ -29,9 +29,13 @@ function IntegrationCard({
   const integrationPoint = useIntegrationPoint(integrationPointName, token, {
     account,
     provider,
-    onClose: () => setSynqlyFrame(null),
+    onClose: (data) => {
+      console.log('onClose', data)
+      setSynqlyFrame(null)
+    },
     onError: (error) => console.error('onError', error),
     onComplete: (result) => console.log('onComplete', result),
+    onDelete: (removed) => console.log('onDelete', removed),
   })
 
   const [integration] = integrationPoint.integrations
@@ -68,7 +72,7 @@ function IntegrationCard({
       {/* When `synqlyFrame` has been set by the `ConnectButton`, we show
       the contents in a modal dialog. */}
       <Dialog.Root open={!!synqlyFrame}>
-        <Dialog.Content style={{ width: '460px' }}>
+        <Dialog.Content style={{ '--max-width': '460px' }}>
           <Inset>{synqlyFrame}</Inset>
         </Dialog.Content>
       </Dialog.Root>
@@ -99,7 +103,7 @@ function IntegrationStatus(integrationPoint) {
     <Flex gap="2">
       <Text>
         {integration
-          ? `${integration.provider_type} integration added`
+          ? `${integration.providerFullname} integration added`
           : isLoading || 'No integration'}
       </Text>
       {isValidating && <Loader />}

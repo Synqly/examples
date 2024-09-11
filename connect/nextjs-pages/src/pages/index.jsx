@@ -1,5 +1,5 @@
 import { Header, Main } from '@/components/skeleton'
-import { Card, Heading } from '@radix-ui/themes'
+import { Card, Heading, Callout } from '@radix-ui/themes'
 import { ManagementClient } from '@synqly/client-sdk'
 import Link from 'next/link'
 

@@ -1,42 +1,32 @@
 #!/usr/bin/env node
+import { env } from './script-init.js'
 import { Management, ManagementClient } from '@synqly/client-sdk'
 import { faker } from '@faker-js/faker'
-import { config } from 'dotenv'
-import { resolve, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { randomUUID } from 'node:crypto'
 import slug from 'slug'
 
-// Load env vars from .env.local
-config({
-  path: resolve(dirname(fileURLToPath(import.meta.url)), '../.env.local'),
-})
+if (!env.SYNQLY_ORG_TOKEN) {
+  console.error(`
+    SYNQLY_ORG_TOKEN must be set to a Synqly Organization access token for
+    this script to work. Please consult the authentication guide for more
+    detail: https://docs.synqly.com/reference/api-authentication
+  `)
+}
 
-const {
-  SYNQLY_ORG_TOKEN,
-  NEXT_PUBLIC_SYNQLY_API_ROOT,
-  NEXT_PUBLIC_AUDIT_LOG_EXPORT_ID,
-  NEXT_PUBLIC_SLACK_NOTIFICATIONS_ID,
-  DEMO_PREFIX,
-} = process.env
-
-const NUM_DEMO_ACCOUNTS = Number(process.env.NUM_DEMO_ACCOUNTS ?? 5)
-
-const org = new ManagementClient({
-  token: SYNQLY_ORG_TOKEN,
-  environment: NEXT_PUBLIC_SYNQLY_API_ROOT,
+const managementClient = new ManagementClient({
+  token: env.SYNQLY_ORG_TOKEN,
+  environment: env.NEXT_PUBLIC_SYNQLY_API_ROOT,
 })
 
 console.log('\nEnsuring demo accounts ...')
-await ensureAccounts(org, NUM_DEMO_ACCOUNTS)
+await ensureAccounts(managementClient, env.NUM_ACCOUNTS)
 
 console.log('\nEnsuring demo integration points ...')
-await ensureIntegrationPoints(org, [
+await ensureIntegrationPoints(managementClient, [
   {
     // The name acts as a slug, or human friendly identifier. If not
     // specified, it will have the same value as the automatically
     // generated `id` field.
-    name: NEXT_PUBLIC_AUDIT_LOG_EXPORT_ID,
+    name: env.AUDIT_LOG_EXPORT_ID,
 
     // The `fullname` of an integration point is used within Connect UI to
     // render the heading of the integration point.
@@ -59,7 +49,7 @@ await ensureIntegrationPoints(org, [
     },
   },
   {
-    name: NEXT_PUBLIC_SLACK_NOTIFICATIONS_ID,
+    name: env.SLACK_NOTIFICATIONS_ID,
     fullname: 'Slack Notifications',
     connector: 'notifications',
     // For this provider we only allow the Slack provider. This means
@@ -81,10 +71,7 @@ console.log('\nDone. Run scripts/clean-demo-data.mjs to clean up.')
  * @param {Management.CreateIntegrationPointRequest[]} integrationPointsData
  */
 async function ensureIntegrationPoints(management, integrationPointsData) {
-  const demoList = [
-    NEXT_PUBLIC_AUDIT_LOG_EXPORT_ID,
-    NEXT_PUBLIC_SLACK_NOTIFICATIONS_ID,
-  ]
+  const demoList = [env.AUDIT_LOG_EXPORT_ID, env.SLACK_NOTIFICATIONS_ID]
   const { body: existingPoints } = await management.integrationPoints.list({
     filter: `name[in]${demoList}`,
   })
@@ -117,14 +104,25 @@ async function ensureIntegrationPoints(management, integrationPointsData) {
 }
 
 /**
- * @typedef {{ id: string; fullname: string }} Account
+ * This function checks to see that the organization has a minimum number of
+ * demo accounts set up. Demo accounts are marked with the given `prefix`
+ * (defaults to `DEMO_PREFIX`) and also belong to the `test` environment.
+ *
  * @param {ManagementClient} management
  * @param {number} minCount
+ * @param {string} prefix
  */
-async function ensureAccounts(management, minCount) {
-  const { body: existingAccounts } = await management.accounts.list({
-    filter: `name[like]${DEMO_PREFIX}%`,
-  })
+async function ensureAccounts(management, minCount, prefix = env.DEMO_PREFIX) {
+  const { body: existingAccounts, error: existingAccountsError } =
+    await management.accounts.list({
+      filter: [`name[like]${prefix}%`, 'environment[eq]test'],
+    })
+
+  if (existingAccountsError) {
+    throw new Error('Unable to list existing accounts.', {
+      cause: existingAccountsError,
+    })
+  }
 
   console.log(`Found ${existingAccounts.result.length} demo accounts`)
   for (const account of existingAccounts.result) {
@@ -141,14 +139,15 @@ async function ensureAccounts(management, minCount) {
     )
 
     for (const fullname of accountNames) {
+      const name = `${prefix}${slug(fullname)}`
       const { body, error } = await management.accounts.create({
-        name: `${DEMO_PREFIX}${slug(fullname)}`,
+        name,
         fullname,
         environment: 'test',
       })
 
       if (error) {
-        throw new Error('unable to create account', { cause: error })
+        throw new Error(`Unable to create account: ${name}`, { cause: error })
       }
 
       const { account } = body.result
