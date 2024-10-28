@@ -7,6 +7,16 @@
   position: relative;
   width: var(--size);
   height: var(--size);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out 0s;
+}
+
+.delayVisible {
+  transition: opacity 0.2s ease-in-out 0.5s;
+}
+
+.visible {
+  opacity: 1;
 }
 
 .circular div {

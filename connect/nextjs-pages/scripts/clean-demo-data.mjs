@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-import { env } from './script-init.js'
-import { Management, ManagementClient } from '@synqly/client-sdk'
-import { faker } from '@faker-js/faker'
+import { env } from './script-init.mjs'
+import { ManagementClient } from '@synqly/client-sdk'
 import { config } from 'dotenv'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -16,15 +15,14 @@ const org = new ManagementClient({
   environment: env.NEXT_PUBLIC_SYNQLY_API_ROOT,
 })
 
-console.log('\nCleaning up demo accounts ...')
 await deleteAccounts()
-
-console.log('\nCleaning up demo integration points ...')
 await deleteIntegrationPoints()
 
 async function deleteAccounts() {
+  console.log('\nCleaning up demo accounts ...')
+
   const { body: demoAccounts, error } = await org.accounts.list({
-    filter: [`name[like]${env.DEMO_PREFIX}%`, 'environment[eq]test'],
+    filter: [`name[like]~${env.DEMO_PREFIX}%`, 'environment[eq]test'],
   })
 
   if (error) {
@@ -47,17 +45,40 @@ async function deleteAccounts() {
 }
 
 async function deleteIntegrationPoints() {
+  console.log('\nCleaning up demo integration points ...')
   const { body: demoPoints, error } = await org.integrationPoints.list({
-    filter: `name[in]${[env.AUDIT_LOG_EXPORT_ID, env.SLACK_NOTIFICATIONS_ID]}`,
+    filter: `name[like]${env.DEMO_PREFIX}%`,
   })
 
   if (error) {
-    throw new Error('Unable to delete integration points', { cause: error })
+    throw new Error('Unable to list demo integration points', { cause: error })
   }
 
   if (!demoPoints.result.length) {
     console.log('Nothing to clean up.')
     return
+  }
+
+  const { body: demoIntegrations, error: integrationsError } =
+    await org.integrations.list({
+      filter: `integration_point_id[in]${demoPoints.result.map(({ id }) => id).join(',')}`,
+    })
+
+  if (integrationsError) {
+    throw new Error('Unable to list demo integrations', {
+      cause: integrationsError,
+    })
+  }
+
+  for (const integration of demoIntegrations.result) {
+    const { error } = await org.integrations.delete(
+      integration.accountId,
+      integration.id,
+    )
+
+    if (error) {
+      throw error
+    }
   }
 
   for (const integrationPoint of demoPoints.result) {

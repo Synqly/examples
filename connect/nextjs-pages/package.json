@@ -15,6 +15,7 @@
     "@synqly/client-sdk": "*",
     "@synqly/connect-react-sdk": "*",
     "next": "14.1.4",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18"
   },

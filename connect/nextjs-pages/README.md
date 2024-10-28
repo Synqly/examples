@@ -1,6 +1,6 @@
 # Connect UI Example – NextJS Pages Router
 
-The Connect UI example demonstrates how to use the Synqly's Connect UI in a multi-tenant Next JS application. It demonstrates how Connect UI is used to allow end-users to configure their integrations, as well as how to retrieve details about the integration.
+The Connect UI example demonstrates how to use the Synqly's Connect UI in a multi-tenant NextJS application. It demonstrates how Connect UI is used to allow end-users to configure their integrations, as well as how to retrieve details about the configured integrations.
 
 For more information about Synqly, please see <https://www.synqly.com>.
 
@@ -9,6 +9,12 @@ This example shows you how to:
 - Define multiple tenants in a sample application
 - Define integration points that are global to the organization
 - Integrate Connect UI with a simple NextJS application
+
+> [!NOTE]
+> This example is built using the Radix component library, and NextJS
+> application framework. Neither of these are requirements in order to use
+> the Connect UI for React library, you may use any component libraries or
+> application frameworks you prefer.
 
 > [!TIP]
 > Reference documentation for Synqly APIs are available at <https://docs.synqly.com>.

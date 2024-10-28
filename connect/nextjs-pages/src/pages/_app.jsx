@@ -1,11 +1,16 @@
-import { Theme } from '@radix-ui/themes'
 import Head from 'next/head'
-
 import '@/styles/reset.css'
 import '@radix-ui/themes/styles.css'
 import { SynqlyProvider } from '@synqly/connect-react-sdk'
+import ErrorPage from './_error'
+import { ConnectUIDemoContainer } from '@/lib/connect-ui-demo-settings'
 
-export default function App({ Component, pageProps }) {
+export { App as default }
+
+/** @param {import('next/app').AppProps} props */
+function App({ Component, pageProps }) {
+  const { error } = pageProps
+
   return (
     <>
       <Head>
@@ -14,14 +19,15 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/synqly-favicon.png" />
       </Head>
-      <SynqlyProvider
-        baseURL={process.env.NEXT_PUBLIC_SYNQLY_API_ROOT}
-        connectURL={process.env.NEXT_PUBLIC_SYNQLY_CONNECT}
-      >
-        <Theme>
-          <Component {...pageProps} />
-        </Theme>
-      </SynqlyProvider>
+      <ConnectUIDemoContainer>
+        <SynqlyProvider
+          baseURL={process.env.NEXT_PUBLIC_SYNQLY_API_ROOT}
+          connectURL={process.env.NEXT_PUBLIC_SYNQLY_CONNECT}
+        >
+          {error && <ErrorPage {...error} />}
+          {!error && <Component {...pageProps} />}
+        </SynqlyProvider>
+      </ConnectUIDemoContainer>
     </>
   )
 }
