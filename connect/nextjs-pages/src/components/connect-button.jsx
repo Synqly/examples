@@ -28,7 +28,11 @@ function ConnectButton({
   ...integrationPoint
 }) {
   const [isConnecting, setIsConnecting] = useState(false)
-  const { type = 'embedded', appearance = 'auto' } = useConnectUIDemoSettings()
+  const {
+    type = 'embedded',
+    appearance = 'auto',
+    experimental_features,
+  } = useConnectUIDemoSettings()
 
   const openConnect = useCallback(() => {
     setIsConnecting(true)
@@ -37,6 +41,7 @@ function ConnectButton({
       type,
       appearance,
       loader: <Loader />,
+      experimental_features,
       onClose: (event) => {
         setIsConnecting(false)
         onClose?.(event)

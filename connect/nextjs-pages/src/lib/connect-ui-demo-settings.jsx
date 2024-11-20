@@ -6,10 +6,11 @@ import {
   Button,
   Flex,
   Heading,
-  Text,
   SegmentedControl,
   Container,
   Theme,
+  Text,
+  Switch,
 } from '@radix-ui/themes'
 import { TrashIcon, GearIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { ConnectAppearance, ConnectType } from '@synqly/connect-react-sdk'
@@ -22,6 +23,7 @@ const DefaultSettings =
   /** @type {import('@synqly/connect-react-sdk').ConnectOptions} */ ({
     type: ConnectType.EMBEDDED,
     appearance: ConnectAppearance.AUTO,
+    experimental_features: undefined,
   })
 
 const DemoSettingsContext = createContext(DefaultSettings)
@@ -126,6 +128,115 @@ function ConnectUIDemoContainer({ children }) {
                   </SegmentedControl.Item>
                 </SegmentedControl.Root>
               </Flex>
+
+              {demoSettings.type === ConnectType.EMBEDDED && (
+                <Flex gap="4" direction="column">
+                  <Heading size="1">Experimental features:</Heading>
+                  <Flex gap="2" align="center" justify="between">
+                    <Text size="1">Frame padding</Text>
+                    <SegmentedControl.Root
+                      size="1"
+                      defaultValue={String(
+                        demoSettings.experimental_features?.inset ?? false,
+                      )}
+                      onValueChange={(inset) =>
+                        setDemoSettings({
+                          ...demoSettings,
+                          experimental_features: {
+                            ...demoSettings.experimental_features,
+                            inset: inset === 'true',
+                          },
+                        })
+                      }
+                    >
+                      <SegmentedControl.Item value="false">
+                        Standard
+                      </SegmentedControl.Item>
+                      <SegmentedControl.Item value="true">
+                        Inset
+                      </SegmentedControl.Item>
+                    </SegmentedControl.Root>
+                  </Flex>
+
+                  <Flex gap="2" align="center" justify="between">
+                    <Text size="1">Close button</Text>
+                    <SegmentedControl.Root
+                      size="1"
+                      defaultValue={String(
+                        demoSettings.experimental_features?.closeButton ?? true,
+                      )}
+                      onValueChange={(closeButton) =>
+                        setDemoSettings({
+                          ...demoSettings,
+                          experimental_features: {
+                            ...demoSettings.experimental_features,
+                            closeButton: closeButton === 'true',
+                          },
+                        })
+                      }
+                    >
+                      <SegmentedControl.Item value="true">
+                        On
+                      </SegmentedControl.Item>
+                      <SegmentedControl.Item value="false">
+                        Off
+                      </SegmentedControl.Item>
+                    </SegmentedControl.Root>
+                  </Flex>
+
+                  <Flex gap="2" align="center" justify="between">
+                    <Text size="1">Back button</Text>
+                    <SegmentedControl.Root
+                      size="1"
+                      defaultValue={String(
+                        demoSettings.experimental_features?.backButton ?? true,
+                      )}
+                      onValueChange={(backButton) =>
+                        setDemoSettings({
+                          ...demoSettings,
+                          experimental_features: {
+                            ...demoSettings.experimental_features,
+                            backButton: backButton === 'true',
+                          },
+                        })
+                      }
+                    >
+                      <SegmentedControl.Item value="true">
+                        On
+                      </SegmentedControl.Item>
+                      <SegmentedControl.Item value="false">
+                        Off
+                      </SegmentedControl.Item>
+                    </SegmentedControl.Root>
+                  </Flex>
+
+                  <Flex gap="2" align="center" justify="between">
+                    <Text size="1">Header title</Text>
+                    <SegmentedControl.Root
+                      size="1"
+                      defaultValue={String(
+                        demoSettings.experimental_features?.headerTitle ?? true,
+                      )}
+                      onValueChange={(headerTitle) =>
+                        setDemoSettings({
+                          ...demoSettings,
+                          experimental_features: {
+                            ...demoSettings.experimental_features,
+                            headerTitle: headerTitle === 'true',
+                          },
+                        })
+                      }
+                    >
+                      <SegmentedControl.Item value="true">
+                        On
+                      </SegmentedControl.Item>
+                      <SegmentedControl.Item value="false">
+                        Off
+                      </SegmentedControl.Item>
+                    </SegmentedControl.Root>
+                  </Flex>
+                </Flex>
+              )}
 
               <Flex gap="4" direction="column">
                 <Heading size="1">Demo data:</Heading>
