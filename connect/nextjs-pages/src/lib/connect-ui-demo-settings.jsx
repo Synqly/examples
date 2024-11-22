@@ -159,7 +159,7 @@ function ConnectUIDemoContainer({ children }) {
                   </Flex>
 
                   <Flex gap="2" align="center" justify="between">
-                    <Text size="1">Close button</Text>
+                    <Text size="1">Close button (header)</Text>
                     <SegmentedControl.Root
                       size="1"
                       defaultValue={String(
@@ -171,6 +171,33 @@ function ConnectUIDemoContainer({ children }) {
                           experimental_features: {
                             ...demoSettings.experimental_features,
                             closeButton: closeButton === 'true',
+                          },
+                        })
+                      }
+                    >
+                      <SegmentedControl.Item value="true">
+                        On
+                      </SegmentedControl.Item>
+                      <SegmentedControl.Item value="false">
+                        Off
+                      </SegmentedControl.Item>
+                    </SegmentedControl.Root>
+                  </Flex>
+
+                  <Flex gap="2" align="center" justify="between">
+                    <Text size="1">Close button (completed)</Text>
+                    <SegmentedControl.Root
+                      size="1"
+                      defaultValue={String(
+                        demoSettings.experimental_features
+                          ?.closeCompleteButton ?? true,
+                      )}
+                      onValueChange={(closeCompleteButton) =>
+                        setDemoSettings({
+                          ...demoSettings,
+                          experimental_features: {
+                            ...demoSettings.experimental_features,
+                            closeCompleteButton: closeCompleteButton === 'true',
                           },
                         })
                       }
