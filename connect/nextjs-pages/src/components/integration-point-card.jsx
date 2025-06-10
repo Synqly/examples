@@ -1,9 +1,17 @@
 import { Loader } from '@/components/loader'
-import { Heading, Card, Dialog, Flex, Inset, Text } from '@radix-ui/themes'
+import {
+  Card,
+  Dialog,
+  Flex,
+  Heading,
+  Inset,
+  Text,
+  VisuallyHidden,
+} from '@radix-ui/themes'
 import { useIntegrationPoint } from '@synqly/connect-react-sdk'
 import { useState } from 'react'
-import { DisconnectButton } from './disconnect-button'
 import { ConnectButton } from './connect-button'
+import { DisconnectButton } from './disconnect-button'
 
 export { IntegrationPointCard }
 
@@ -68,7 +76,9 @@ function IntegrationPointCard({
  * @param {import('@synqly/connect-react-sdk').UseIntegrationPointData} integrationPoint
  */
 function IntegrationPointHeader(integrationPoint) {
-  const { result: { fullname, description } = {} } = integrationPoint
+  const {
+    result: { fullname, description } = {},
+  } = integrationPoint
 
   return (
     <Flex gap="4" direction="column">
@@ -180,6 +190,15 @@ function ConnectionControls({ children, ...integrationPoint }) {
        * embedded inside of it.
        */}
       <Dialog.Root open={!!synqlyFrame}>
+        <VisuallyHidden>
+          <Dialog.Title>
+            Connect to {integrationPoint.result?.fullname}
+          </Dialog.Title>
+          <Dialog.Description>
+            Configuration UI for the {integrationPoint.result?.fullname}{' '}
+            integration point.
+          </Dialog.Description>
+        </VisuallyHidden>
         <Dialog.Content style={{ maxWidth: '460px' }}>
           <Inset>{synqlyFrame}</Inset>
         </Dialog.Content>

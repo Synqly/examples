@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { env } from './script-init.mjs'
-import { Management, ManagementClient } from '@synqly/client-sdk'
 import { faker } from '@faker-js/faker'
+import { Management, ManagementClient } from '@synqly/client-sdk'
 import slug from 'slug'
+import { env } from './script-init.mjs'
 
 const managementClient = new ManagementClient({
   token: env.SYNQLY_ORG_TOKEN,
@@ -85,7 +85,12 @@ async function ensureIntegrationPoints(management) {
         })
 
         if (integrationPoint.ok === false) {
-          throw integrationPoint.error
+          console.warn(
+            'Unable to create integration point:',
+            connector,
+            integrationPoint.error,
+          )
+          continue
         }
 
         const { fullname, id } = integrationPoint.body.result

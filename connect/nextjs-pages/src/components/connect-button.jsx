@@ -51,7 +51,14 @@ function ConnectButton({
     if (type === ConnectType.EMBEDDED) {
       onEmbed?.(connectUI)
     }
-  }, [integrationPoint, type, appearance, onClose, onEmbed])
+  }, [
+    integrationPoint,
+    type,
+    appearance,
+    experimental_features,
+    onClose,
+    onEmbed,
+  ])
 
   return (
     <Flex direction="column" gap="4" align={'end'}>
