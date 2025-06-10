@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@synqly/client-sdk": "*",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "typescript": "^5.8.2"
   },
   "synqly-examples": {
     "target": "siem-connector/nodejs"
