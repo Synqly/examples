@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react'
-import { Loader } from './loader'
+import { OpenInNewWindowIcon } from '@radix-ui/react-icons'
 import { Button, Flex } from '@radix-ui/themes'
 import { ConnectType } from '@synqly/connect-react-sdk'
-import { OpenInNewWindowIcon } from '@radix-ui/react-icons'
+import { useCallback, useState } from 'react'
 import { useConnectUIDemoSettings } from '@/lib/connect-ui-demo-settings'
+import { Loader } from './loader'
 
 export { ConnectButton }
 

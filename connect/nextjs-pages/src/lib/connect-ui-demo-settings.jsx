@@ -1,21 +1,21 @@
-import { createContext, useCallback, useContext, useState } from 'react'
+import { GearIcon, ReloadIcon, TrashIcon } from '@radix-ui/react-icons'
 import {
   Box,
-  Separator,
-  Popover,
   Button,
+  Container,
   Flex,
   Heading,
+  Popover,
   SegmentedControl,
-  Container,
-  Theme,
-  Text,
+  Separator,
   Switch,
+  Text,
+  Theme,
 } from '@radix-ui/themes'
-import { TrashIcon, GearIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { ConnectAppearance, ConnectType } from '@synqly/connect-react-sdk'
-import { ThemeProvider } from 'next-themes'
 import { useRouter } from 'next/router'
+import { ThemeProvider } from 'next-themes'
+import { createContext, useCallback, useContext, useState } from 'react'
 
 export { ConnectUIDemoContainer, useConnectUIDemoSettings }
 
@@ -250,6 +250,32 @@ function ConnectUIDemoContainer({ children }) {
                           experimental_features: {
                             ...demoSettings.experimental_features,
                             headerTitle: headerTitle === 'true',
+                          },
+                        })
+                      }
+                    >
+                      <SegmentedControl.Item value="true">
+                        On
+                      </SegmentedControl.Item>
+                      <SegmentedControl.Item value="false">
+                        Off
+                      </SegmentedControl.Item>
+                    </SegmentedControl.Root>
+                  </Flex>
+
+                  <Flex gap="2" align="center" justify="between">
+                    <Text size="1">Footer</Text>
+                    <SegmentedControl.Root
+                      size="1"
+                      defaultValue={String(
+                        demoSettings.experimental_features?.footer ?? true,
+                      )}
+                      onValueChange={(footer) =>
+                        setDemoSettings({
+                          ...demoSettings,
+                          experimental_features: {
+                            ...demoSettings.experimental_features,
+                            footer: footer === 'true',
                           },
                         })
                       }

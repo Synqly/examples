@@ -12,9 +12,14 @@ function serverSideError(context, { statusCode = 500, content } = {}) {
   return {
     props: {
       error: {
-        ...content,
+        ...serialize(content),
         statusCode,
       },
     },
   }
+}
+
+/** @param {any} obj */
+function serialize(obj) {
+  return obj != null ? JSON.parse(JSON.stringify(obj)) : null
 }

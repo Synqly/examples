@@ -1,9 +1,9 @@
-import { Heading, Flex, Section, Link } from '@radix-ui/themes'
 import { ChevronLeftIcon } from '@radix-ui/react-icons'
+import { Flex, Heading, Link, Section } from '@radix-ui/themes'
 import { ManagementClient } from '@synqly/client-sdk'
 import { IntegrationPointCard } from '@/components/integration-point-card'
-import { serverSideError } from '@/lib/server-error'
 import { IntegrationPointsHelp } from '@/lib/help'
+import { serverSideError } from '@/lib/server-error'
 
 export { Page as default, getServerSideProps }
 

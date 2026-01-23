@@ -1,4 +1,3 @@
-import { Loader } from '@/components/loader'
 import {
   Card,
   Dialog,
@@ -10,6 +9,7 @@ import {
 } from '@radix-ui/themes'
 import { useIntegrationPoint } from '@synqly/connect-react-sdk'
 import { useState } from 'react'
+import { Loader } from '@/components/loader'
 import { ConnectButton } from './connect-button'
 import { DisconnectButton } from './disconnect-button'
 
@@ -76,9 +76,7 @@ function IntegrationPointCard({
  * @param {import('@synqly/connect-react-sdk').UseIntegrationPointData} integrationPoint
  */
 function IntegrationPointHeader(integrationPoint) {
-  const {
-    result: { fullname, description } = {},
-  } = integrationPoint
+  const { result: { fullname, description } = {} } = integrationPoint
 
   return (
     <Flex gap="4" direction="column">
