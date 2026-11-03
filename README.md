@@ -15,6 +15,8 @@ Each example is self-contained and intended to be run in isolation. For instruct
   - [NodeJS example](./siem-connector/nodejs)
 - [Connect UI](./connect)
   - [NextJS pages router example](./connect/nextjs-pages)
+- [Agents](./agents)
+  - [Alerts remediator](./agents/alerts-remediator): triages EDR alerts with Claude Code agents over the Synqly MCP server
 
 ## Contributing
 

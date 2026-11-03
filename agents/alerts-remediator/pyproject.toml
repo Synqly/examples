@@ -1,0 +1,14 @@
+[project]
+name = "alerts-remediator"
+version = "0.1.0"
+description = "Poll Synqly EDR alerts and triage them with Claude Code agents over the Synqly MCP server"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "claude-agent-sdk>=0.1.0",
+    "langchain-mcp-adapters>=0.1.0",
+    "langgraph>=0.6.0",
+]
+
+[tool.ruff]
+line-length = 120
