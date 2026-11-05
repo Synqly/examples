@@ -1,8 +1,7 @@
 # alerts-remediator
 
 A small LangGraph agent that watches a Synqly EDR integration for new alerts and triages each
-one with two Claude Code agents, talking to Synqly only through the
-[Synqly MCP server](../../services/mcp).
+one with two Claude Code agents, talking to Synqly only through the hosted Synqly MCP server.
 
 ```
 every POLL_SECONDS
@@ -24,7 +23,7 @@ every POLL_SECONDS
 ```
 
 1. **Poll.** A plain LangChain MCP tool call to `edr_query_alerts`, with no LLM involved. It
-   filters on `time gte <start of the previous successful poll>`, so each poll asks only for
+   filters on `time[gte]<start of the previous successful poll>`, so each poll asks only for
    alerts since the last one. The first poll looks back one `POLL_SECONDS` interval. A failed poll
    doesn't advance the window, so the next one covers it. Alerts still in status `New` that
    haven't been seen yet are handed to the graph one at a time.
@@ -47,12 +46,6 @@ every POLL_SECONDS
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/)
-- A running Synqly MCP server that has the `edr_update_alert` tool, which `services/mcp`
-  provides. `DRY_RUN=1` doesn't call it, so any Synqly MCP server works for a dry run. Either:
-  - `make mcp-stack` from the repo root. This runs an embedded platform plus MCP at
-    `http://localhost:18000/mcp`, and its well-known token is in `compose-mcp.yaml`.
-  - `cd services/mcp && uv run synqly-mcp-server`, which serves `http://localhost:8000/mcp`
-    against `api.synqly.com`.
 - A Synqly organization token, and an account with an EDR integration whose provider supports
   `update_alert` (CrowdStrike, Microsoft Defender, SentinelOne and Bitdefender at the time of
   writing; the MCP `get_provider_details` tool has the current list).
@@ -65,7 +58,7 @@ every POLL_SECONDS
 ## Run
 
 ```bash
-cd examples/alerts-remediator
+cd agents/alerts-remediator
 export SYNQLY_ORG_TOKEN=<org token>
 DRY_RUN=1 uv run main.py                           # investigate only: no remediation, no alert updates
 uv run main.py
